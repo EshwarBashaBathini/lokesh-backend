@@ -2,42 +2,27 @@
 # Build your Java project and run tests with Apache Maven.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
-
 trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'windows-latest'  # Use Windows agent
 
 steps:
-# Cache Maven dependencies to speed up the build
-- task: Cache@2
+# Checkout the code with full history (using Checkout@1)
+- task: Checkout@1
   inputs:
-    key: 'maven | "$(Agent.OS)" | pom.xml'
-    restoreKeys: |
-      maven | "$(Agent.OS)"
-    path: $(MAVEN_CACHE)
+    clean: true  # Ensures that the repo is freshly cloned
+    fetchDepth: 0  # Fetch full Git history
 
-# Maven clean and test
+# Build and test the Java project with Maven
 - task: Maven@3
   inputs:
-    mavenPomFile: 'pom.xml'
-    goals: 'clean test'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.11'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-
-# Maven package (build the JAR/WAR file)
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    goals: 'package'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.11'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    mavenPomFile: 'pom.xml'   # Path to your pom.xml file
+    mavenOptions: '-Xmx3072m'  # JVM options for Maven
+    javaHomeOption: 'JDKVersion'   # Java home to use
+    jdkVersionOption: '1.11'      # JDK version
+    jdkArchitectureOption: 'x64'  # Architecture of the JDK
+    publishJUnitResults: true    # Publish JUnit test results
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'   # Test result file pattern
+    goals: 'clean package'    # Maven goals to run (clean and package)
