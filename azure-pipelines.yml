@@ -21,7 +21,7 @@ steps:
     mavenPomFile: 'pom.xml'   # Path to your pom.xml file
     mavenOptions: '-Xmx3072m'  # JVM options for Maven
     javaHomeOption: 'JDKVersion'   # Java home to use
-    jdkVersionOption: '1.11'      # JDK version
+    jdkVersionOption: '1.17'      # JDK version
     jdkArchitectureOption: 'x64'  # Architecture of the JDK
     publishJUnitResults: true    # Publish JUnit test results
     testResultsFiles: '**/surefire-reports/TEST-*.xml'   # Test result file pattern
