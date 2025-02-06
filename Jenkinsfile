@@ -7,7 +7,7 @@ pipeline {
         
         AZURE_APP_NAME = 'eshwar-test-01' // Replace with your Azure Web App name
         AZURE_RESOURCE_GROUP = 'eshwar' // Replace with your resource group
-        // Replace with your actual Azure WebApp name
+        // Replace with your actual Azure WebApp name 
     }
     
     stages {
